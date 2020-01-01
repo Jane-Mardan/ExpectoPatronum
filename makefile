@@ -1,4 +1,12 @@
 #!Makefile
+#
+# --------------------------------------------------------
+#
+#    hurlex 这个小内核的 Makefile
+#    默认使用的C语言编译器是 GCC、汇编语言编译器是 nasm
+#
+# --------------------------------------------------------
+#
 C_SOURCE = $(shell find . -name "*.c")
 C_OBJECTS = $(patsubst %.c, %.o, $(C_SOURCE))
 S_SOURCE = $(shell find . -name "*.s")
@@ -24,18 +32,18 @@ all: $(S_OBJECTS) $(C_OBJECTS) link update_image
 
 link: 
 	@echo linking core files $< ...
-	$(LD) $(LD_FLAGS) $(S_OBJECTS) $(C_OBJECTS) -o ExpectroPatronum_kernal
+	$(LD) $(LD_FLAGS) $(S_OBJECTS) $(C_OBJECTS) -o ExpectroPatronum_kernel
 
 .PHONY:clean
 clean:
-	$(RM) $(S_OBJECTS) $(C_OBJECTS) ExpectroPatronum_kernal
+	$(RM) $(S_OBJECTS) $(C_OBJECTS) ExpectroPatronum_kernel
 
 .PHONY:update_image
 update_image:
-	sudo mount floppy.image /mnt/kernel
-	sudo cp ExpectroPatronum_kernal /mnt/kernal/ExpectroPatronum_kernal 
+	sudo mount floppy.img /mnt/kernel
+	sudo cp ExpectroPatronum_kernel /mnt/kernel/ExpectroPatronum_kernel 
 	sleep 1
-	sudo unmount /mnt/kernal
+	sudo umount /mnt/kernel
 
 .PHONY:mount_image
 mount_image:
